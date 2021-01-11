@@ -1,11 +1,17 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Crosspost Markdown'
+description: 'Deploy latest markdown blog post.'
+author: 'basicBrogrammer'
+branding:
+  icon: align-center
+  color: purple
 inputs:
-  milliseconds: # change this
+  content-dir:
+    description: 'Location to blog markdown files.'
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    default: './content/articles/'
+  dev-to-token:
+    description: 'API Token for dev.to'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'

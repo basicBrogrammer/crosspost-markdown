@@ -1,16 +1,21 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
+import * as github from '@actions/github'
+import * as Webhooks from '@octokit/webhooks'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+    const octokit = github.getOctokit(core.getInput('github-token'))
+    const commit = await octokit.repos.getCommit({
+      ...github.context.repo,
+      ref: github.context.sha
+    })
+    const files = (commit?.data?.files || [])
+      .map((file: any) => file.filename)
+      .filter((filename: string) =>
+        filename.includes(core.getInput('content-dir'))
+      )
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
-
-    core.setOutput('time', new Date().toTimeString())
+    files.forEach(file => console.log(`File: ${file}`))
   } catch (error) {
     core.setFailed(error.message)
   }

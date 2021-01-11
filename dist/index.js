@@ -38,15 +38,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__webpack_require__(186));
 const github = __importStar(__webpack_require__(438));
-function run() {
+const getFiles = () => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
+    const octokit = github.getOctokit(core.getInput('github-token'));
+    const commit = yield octokit.repos.getCommit(Object.assign(Object.assign({}, github.context.repo), { ref: github.context.sha }));
+    return (((_a = commit === null || commit === void 0 ? void 0 : commit.data) === null || _a === void 0 ? void 0 : _a.files) || [])
+        .map((file) => file.filename)
+        .filter((filename) => filename.includes(core.getInput('content-dir')));
+});
+function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const octokit = github.getOctokit(core.getInput('github-token'));
-            const commit = yield octokit.repos.getCommit(Object.assign(Object.assign({}, github.context.repo), { ref: github.context.sha }));
-            const files = (((_a = commit === null || commit === void 0 ? void 0 : commit.data) === null || _a === void 0 ? void 0 : _a.files) || [])
-                .map((file) => file.filename)
-                .filter((filename) => filename.includes(core.getInput('content-dir')));
+            const files = yield getFiles();
             files.forEach(file => console.log(`File: ${file}`));
         }
         catch (error) {

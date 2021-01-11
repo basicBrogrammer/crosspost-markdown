@@ -5,6 +5,9 @@ branding:
   icon: align-center
   color: purple
 inputs:
+  github-token:
+    description: 'Location to blog markdown files.'
+    required: true
   content-dir:
     description: 'Location to blog markdown files.'
     required: true

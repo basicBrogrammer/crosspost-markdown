@@ -2,7 +2,7 @@ require('./sourcemap-register.js');module.exports =
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 3109:
+/***/ 8052:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -36,11 +36,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getFiles = void 0;
 const core = __importStar(__webpack_require__(2186));
 const github = __importStar(__webpack_require__(5438));
-const fs = __importStar(__webpack_require__(5747));
-const frontmatter = __webpack_require__(9203);
-const getFiles = () => __awaiter(void 0, void 0, void 0, function* () {
+exports.getFiles = () => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const octokit = github.getOctokit(core.getInput('github-token'));
     const commit = yield octokit.repos.getCommit(Object.assign(Object.assign({}, github.context.repo), { ref: github.context.sha }));
@@ -48,27 +47,55 @@ const getFiles = () => __awaiter(void 0, void 0, void 0, function* () {
         .map((file) => file.filename)
         .filter((filename) => filename.includes(core.getInput('content-dir')));
 });
-const publish = (path) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const markdown = fs.readFileSync(`./${path}`, 'utf8');
-        const { data } = frontmatter(markdown);
-        if (data.published) {
-            // logResponse(data.title, 'Dev.to', devTo.publish(markdown))
-            console.log(`Article ${data.title} published.`);
-        }
-        else {
-            console.log(`Article ${data.title} NOT published. Skipping.`);
-        }
-    }
-    catch (err) {
-        console.error(err);
-    }
+
+
+/***/ }),
+
+/***/ 3109:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
 });
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const core = __importStar(__webpack_require__(2186));
+const get_files_1 = __webpack_require__(8052);
+const publish_1 = __importDefault(__webpack_require__(3804));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const files = yield getFiles();
-            files.forEach(publish);
+            const files = yield get_files_1.getFiles();
+            files.forEach(publish_1.default);
         }
         catch (error) {
             core.setFailed(error.message);
@@ -76,6 +103,139 @@ function run() {
     });
 }
 run();
+
+
+/***/ }),
+
+/***/ 108:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const node_fetch_1 = __importDefault(__webpack_require__(467));
+const core = __importStar(__webpack_require__(2186));
+class DevTo {
+    constructor() {
+        this.token = core.getInput('dev-to-token');
+    }
+    publish(body_markdown) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const body = {
+                article: {
+                    body_markdown,
+                },
+            };
+            return node_fetch_1.default('https://dev.to/api/articles', {
+                method: 'post',
+                body: JSON.stringify(body),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'api-key': this.token,
+                },
+            }).then((response) => response.json());
+        });
+    }
+}
+exports.default = new DevTo();
+
+
+/***/ }),
+
+/***/ 3804:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const core = __importStar(__webpack_require__(2186));
+const fs = __importStar(__webpack_require__(5747));
+const dev_to_1 = __importDefault(__webpack_require__(108));
+const frontmatter = __webpack_require__(9203);
+const logResponse = (title, destination, publishCallback) => __awaiter(void 0, void 0, void 0, function* () {
+    const { status } = yield publishCallback;
+    console.table({ title, destination, status });
+});
+const publish = (path) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const markdown = fs.readFileSync(`./${path}`, 'utf8');
+        const { data } = frontmatter(markdown);
+        if (data.published) {
+            if (core.getInput('dev-to-token').length > 0) {
+                logResponse(data.title, 'Dev.to', dev_to_1.default.publish(markdown));
+            }
+        }
+        else {
+            console.log(`Article ${data.title} NOT published. Skipping.`);
+        }
+    }
+    catch (err) {
+        core.setFailed(err.message);
+    }
+});
+exports.default = publish;
 
 
 /***/ }),

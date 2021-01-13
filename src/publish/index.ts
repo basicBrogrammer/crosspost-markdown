@@ -25,4 +25,5 @@ const publish = async (path: string): Promise<void> => {
     core.setFailed(err.message);
   }
 };
+
 export default publish;

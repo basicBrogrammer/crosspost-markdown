@@ -6,7 +6,7 @@ branding:
   color: purple
 inputs:
   github-token:
-    description: 'Location to blog markdown files.'
+    description: 'GitHub Auth Token.'
     required: true
   content-dir:
     description: 'Location to blog markdown files.'

@@ -1,28 +1,32 @@
 import fetch from 'node-fetch';
-import * as core from '@actions/core';
+import {Response} from 'node-fetch';
+import Publisher from './publisher';
 
-class DevTo {
-  token: string;
-  constructor() {
-    this.token = core.getInput('dev-to-token');
+class DevTo extends Publisher {
+  get tokenInput() {
+    return 'dev-to-token';
   }
-
-  async publish(body_markdown: string): Promise<any> {
+  _publish(): Promise<Response> {
     const body = {
       article: {
-        body_markdown,
+        body_markdown: this.markdown,
       },
     };
 
-    return fetch('https://dev.to/api/articles', {
-      method: 'post',
+    // Post or a Put
+    const url = this.data.devToId ? `https://dev.to/api/articles/${this.data.devToId}` : 'https://dev.to/api/articles';
+
+    return fetch(url, {
+      method: this.data.devToId ? 'put' : 'post',
       body: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json',
         'api-key': this.token,
       },
-    }).then((response: any) => response.json());
+    });
   }
 }
 
-export default new DevTo();
+export default DevTo;
+
+// fetch(url, {method: 'put', body: JSON.stringify(body), headers: {'Content-Type': 'application/json', 'api-key': token}}).then((res) => { console.table(res); return res.json(); }).then((x) => console.table(x)).catch((err) => console.log(err));

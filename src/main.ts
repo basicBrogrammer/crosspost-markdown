@@ -4,6 +4,8 @@ import publish from './publish';
 
 async function run(): Promise<void> {
   try {
+    // test files
+    // const files = ['__tests__/fixtures/articles/published.md', '__tests__/fixtures/articles/not-published.md'];
     const files = await getFiles();
     files.forEach(publish);
   } catch (error) {

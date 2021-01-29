@@ -10,11 +10,11 @@ export default class Publisher {
   content: string | null = null;
 
   constructor(path: string) {
-    this.token = core.getInput(this.tokenInput) || 'needs-to-be-configured';
+    this.token = core.getInput(this.tokenInput);
     if (this._isConfigured) {
       // setting the markdown to be used in _publish because
       // frontmatter.stringify can have issues posting.
-      this.markdown = fs.readFileSync(`./${path}`, 'utf8');
+      this.markdown = fs.readFileSync(path, 'utf8');
       const {data, content} = frontmatter(this.markdown);
       this.data = data;
       this.content = content;
@@ -27,7 +27,7 @@ export default class Publisher {
     if (!this._isConfigured) return;
 
     if (this.data?.published) {
-      this._logResponse(this._publish());
+      this._publish().then(this._logResponse);
     } else {
       console.log(`Article ${this.data?.title} NOT published. Skipping.`);
     }
@@ -38,18 +38,17 @@ export default class Publisher {
     return Promise.resolve(new Response(undefined));
   }
 
-  async _logResponse(response: Promise<Response>) {
-    const res = await response;
-    const body = await res.json();
+  _logResponse = async (response: Response) => {
+    const body = await response.json();
 
     console.table({
       title: this.data.title,
       destination: this.constructor.name,
-      status: res.status,
+      status: response.status,
       slug: body.slug,
       id: body.id,
     });
-  }
+  };
 
   get _isConfigured() {
     return !!this.token;

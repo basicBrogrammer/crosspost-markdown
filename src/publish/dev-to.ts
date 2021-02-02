@@ -6,6 +6,7 @@ class DevTo extends Publisher {
   get tokenInput() {
     return 'dev-to-token';
   }
+
   _publish(): Promise<Response> {
     const body = {
       article: {
@@ -28,5 +29,3 @@ class DevTo extends Publisher {
 }
 
 export default DevTo;
-
-// fetch(url, {method: 'put', body: JSON.stringify(body), headers: {'Content-Type': 'application/json', 'api-key': token}}).then((res) => { console.table(res); return res.json(); }).then((x) => console.table(x)).catch((err) => console.log(err));

@@ -3,10 +3,6 @@ import {Response} from 'node-fetch';
 import Publisher from './publisher';
 
 class DevTo extends Publisher {
-  get tokenInput() {
-    return 'dev-to-token';
-  }
-
   _publish(): Promise<Response> {
     const body = {
       article: {

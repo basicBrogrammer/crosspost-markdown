@@ -3,10 +3,10 @@ jest.mock('node-fetch');
 import {mocked} from 'ts-jest/utils';
 import fetch, {Response, RequestInit} from 'node-fetch';
 import DevTo from '../dev-to';
+import flushPromises from '../../__tests__/flush-promises';
 
 // paths
 const published = '__tests__/fixtures/articles/published.md';
-const unpublished = '__tests__/fixtures/articles/not-published.md';
 const existing = '__tests__/fixtures/articles/existing-published.md';
 import devToOk from '../../../__tests__/fixtures/dev-to/post/200.json';
 
@@ -21,33 +21,17 @@ mocked(fetch).mockImplementation(async function (url: any, init?: RequestInit): 
   };
 });
 
-// TODO: prolly move to the Publisher test
-test('initializes using the Publisher constructor', () => {
-  const instance = new DevTo(published);
+test('the token is set', () => {
+  const instance = new DevTo(published, 'dev-to-token');
 
   // using the __mocks__/@actions/core to validate core.getInput was called
   // with 'dev-to-token'
   expect(instance.token).toEqual('dev-to-token-testing');
-  expect(instance.data.title).toEqual('Published Article');
-  expect(instance.data.published).toEqual(true);
-  expect(instance.data.description).toEqual('This article is publishable');
-  expect(instance.data.tags).toEqual('javascript, vue, github');
 });
 
 describe('publish', () => {
-  // TODO: prolly move to the Publisher test
-  test('unpublished article', () => {
-    const instance = new DevTo(unpublished);
-    instance.publish();
-    expect(console.log).toHaveBeenCalledWith(`Article Unpublished Article NOT published. Skipping.`);
-    expect(fetch).not.toHaveBeenCalled();
-  });
-
-  function flushPromises() {
-    return new Promise((resolve) => setImmediate(resolve));
-  }
   test('a successful create', async () => {
-    const instance = new DevTo(published);
+    const instance = new DevTo(published, 'dev-to-token');
     instance.publish();
 
     expect(fetch).toHaveBeenCalledWith('https://dev.to/api/articles', {
@@ -68,7 +52,7 @@ describe('publish', () => {
   });
 
   test('a successful update', async () => {
-    const instance = new DevTo(existing);
+    const instance = new DevTo(existing, 'dev-to-token');
     instance.publish();
 
     expect(fetch).toHaveBeenCalledWith('https://dev.to/api/articles/123', {

@@ -9,8 +9,8 @@ export default class Publisher {
   data: any = null;
   content: string | null = null;
 
-  constructor(path: string) {
-    this.token = core.getInput(this.tokenInput);
+  constructor(path: string, tokenKey: string) {
+    this.token = core.getInput(tokenKey);
     if (this._isConfigured) {
       // setting the markdown to be used in _publish because
       // frontmatter.stringify can have issues posting.
@@ -35,7 +35,7 @@ export default class Publisher {
 
   _publish(): Promise<Response> {
     console.warn('Child class should implement.');
-    return Promise.resolve(new Response(undefined));
+    return Promise.resolve(new Response(JSON.stringify({}), {status: 500}));
   }
 
   _logResponse = async (response: Response) => {
@@ -52,8 +52,5 @@ export default class Publisher {
 
   get _isConfigured() {
     return !!this.token;
-  }
-  get tokenInput() {
-    return '';
   }
 }

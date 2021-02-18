@@ -1,6 +1,7 @@
 import * as core from '@actions/core';
 import {getFiles} from './get-files';
 import DevTo from './publish/dev-to';
+import Medium from './publish/medium';
 
 async function run(): Promise<void> {
   try {
@@ -9,6 +10,7 @@ async function run(): Promise<void> {
     const files = await getFiles();
     files.forEach((path: string) => {
       new DevTo(path, 'dev-to-token').publish();
+      new Medium(path, 'medium-token').publish();
     });
   } catch (error) {
     core.setFailed(error.message);

@@ -15,6 +15,12 @@ inputs:
   dev-to-token:
     description: 'API Token for dev.to'
     required: false
+  medium-token:
+    description: 'API Token for medium.com'
+    required: false
+  medium-author-id:
+    description: 'Author id from medium.com'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'

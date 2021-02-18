@@ -7,7 +7,7 @@ export default class Publisher {
   token: string;
   markdown: string = 'not-configured';
   data: any = null;
-  content: string | null = null;
+  content: string = 'no content';
 
   constructor(path: string, tokenKey: string) {
     this.token = core.getInput(tokenKey);
@@ -27,7 +27,9 @@ export default class Publisher {
     if (!this._isConfigured) return;
 
     if (this.data?.published) {
-      this._publish().then(this._logResponse);
+      this._publish()
+        .then(this._logResponse)
+        .catch((e) => console.log(e));
     } else {
       console.log(`Article ${this.data?.title} NOT published. Skipping.`);
     }

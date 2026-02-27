@@ -13,7 +13,8 @@ async function run(): Promise<void> {
       new Medium(path, 'medium-token').publish();
     });
   } catch (error) {
-    core.setFailed(error.message);
+    const message = error instanceof Error ? error.message : String(error);
+    core.setFailed(message);
   }
 }
 

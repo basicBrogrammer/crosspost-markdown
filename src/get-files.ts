@@ -3,7 +3,7 @@ import * as github from '@actions/github';
 
 export const getFiles = async (): Promise<string[]> => {
   const octokit = github.getOctokit(core.getInput('github-token'));
-  const commit = await octokit.repos.getCommit({
+  const commit = await octokit.rest.repos.getCommit({
     ...github.context.repo,
     ref: github.context.sha,
   });

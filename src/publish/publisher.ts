@@ -41,7 +41,7 @@ export default class Publisher {
   }
 
   _logResponse = async (response: Response) => {
-    const body = await response.json();
+    const body = (await response.json()) as {slug?: string; id?: string};
 
     console.table({
       title: this.data.title,

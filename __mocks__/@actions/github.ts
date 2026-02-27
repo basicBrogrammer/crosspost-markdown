@@ -26,8 +26,10 @@ export const context = {
 
 export const getOctokit = (token: string): any => {
   return {
-    repos: {
-      getCommit: () => new Commit(),
+    rest: {
+      repos: {
+        getCommit: () => new Commit(),
+      },
     },
   };
 };

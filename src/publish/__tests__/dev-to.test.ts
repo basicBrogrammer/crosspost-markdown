@@ -1,7 +1,6 @@
 jest.mock('@actions/core');
 jest.mock('node-fetch');
-import {mocked} from 'ts-jest/utils';
-import fetch, {Response, RequestInit} from 'node-fetch';
+import fetch, {RequestInit} from 'node-fetch';
 import DevTo from '../dev-to';
 import flushPromises from '../../__tests__/flush-promises';
 
@@ -13,7 +12,7 @@ import devToOk from '../../../__tests__/fixtures/dev-to/post/200.json';
 // jest mocks
 console.log = jest.fn();
 console.table = jest.fn();
-mocked(fetch).mockImplementation(async function (url: any, init?: RequestInit): Promise<any> {
+jest.mocked(fetch).mockImplementation(async function (url: any, init?: RequestInit): Promise<any> {
   return {
     status: 200,
     ok: true,

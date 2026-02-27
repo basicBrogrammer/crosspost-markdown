@@ -3,6 +3,8 @@ export const getInput = (key: string) => {
   switch (key) {
     case 'dev-to-token':
       return 'dev-to-token-testing';
+    case 'medium-token':
+      return '';
     case 'github-token':
       return 'gh-token-mock';
     case 'content-dir':
@@ -17,3 +19,4 @@ export const getInput = (key: string) => {
 };
 
 export const info = jest.fn();
+export const setFailed = jest.fn();

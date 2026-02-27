@@ -28,7 +28,7 @@ test('does NOT sets constructor attrs when not configured configured', () => {
   expect(instance.token).toEqual('');
   expect(instance.data).toEqual(null);
   expect(instance.markdown).toEqual('not-configured');
-  expect(instance.content).toEqual(null);
+  expect(instance.content).toEqual('no content');
   expect(core.info).toHaveBeenCalledWith('Not configured');
 });
 
